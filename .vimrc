@@ -46,6 +46,7 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
 set wildignore+=*.pdf,*.jpg,*.jpeg
 
+" handle side scrolling
 if !&scrolloff
   set scrolloff=1
 endif
@@ -54,9 +55,9 @@ if !&sidescrolloff
 endif
 set display+=lastline
 
-
+"" what's shown if 'set list' is used
 if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+  set listchars=tab:>\ ,trail:·,extends:>,precedes:<,nbsp:+
 endif
 
 if v:version > 703 || v:version == 703 && has("patch541")
@@ -81,36 +82,38 @@ colorscheme reslate
 "" STATUS
 ""
 
-if has('cmdline_info')
-    set ruler             " show the ruler
-    " a ruler on steroids
-    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
-    set showcmd           " show partial commands in status line and
-                          " selected characters/lines in visual mode
-endif
+" superseded by airline, so commented out
+" if has('cmdline_info')
+"     set ruler             " show the ruler
+"     " a ruler on steroids
+"     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
+"     set showcmd           " show partial commands in status line and
+"                           " selected characters/lines in visual mode
+" endif
 
-if has('statusline')
-    set laststatus=2     
-    " a statusline, also on steroids
-    set statusline=%m
-    set statusline+=%t
-    set statusline+=%<\ 
-    set statusline+=[%{strlen(&ft)?&ft:'none'},
-    set statusline+=\ %{strlen(&fenc)?&fenc:'none'},
-    set statusline+=\ %{&ff}]
-    set statusline+=%=
-    set statusline+=:\b%n
-    set statusline+=%{fugitive#statusline()}
-    set statusline+=%r%w\ %l,%c%V\ [%b,0x%-8B]
-    set statusline+=%P
-endif
+"" superseded by airline, so commented out
+" if has('statusline')
+"     set laststatus=2     
+"     " a statusline, also on steroids
+"     set statusline=%m
+"     set statusline+=%t
+"     set statusline+=%<\ 
+"     set statusline+=[%{strlen(&ft)?&ft:'none'},
+"     set statusline+=\ %{strlen(&fenc)?&fenc:'none'},
+"     set statusline+=\ %{&ff}]
+"     set statusline+=%=
+"     set statusline+=:\b%n
+"     set statusline+=%{fugitive#statusline()}
+"     set statusline+=%r%w\ %l,%c%V\ [%b,0x%-8B]
+"     set statusline+=%P
+" endif
 
 ""
 "" KEY BINDINGS
 ""
 
-" I forget. I think this changes the mode macvim goes into
-" when you select text with the mouse. (I want visual)
+" instead of selectmode, let's just go to visual mode
+" when pressing shift-arrows
 set selectmode=
 imap <S-up> <Esc>vk
 imap <S-down> <Esc>vj
@@ -136,7 +139,8 @@ if has("gui_macvim") && has("gui_running")
     set guifont=Bitstream\ Vera\ Sans\ Mono:h13
     set guioptions-=T         " no macvim toolbar
 
-    set macmeta           " Necessary for using meta key in mappings on OSX
+    " set macmeta           " Necessary for using meta key in mappings on OSX
+    " but also turns off the osx style inserting 'special' characters
     " let macvim_skip_cmd_opt_movement = 1 " Prevent MacVim from mapping fake HOME/END to M-arrow keys.
     "let macvim_hig_shift_movement = 1 " mvim shift-arrow-keys
 
@@ -167,6 +171,8 @@ if has("gui_macvim") && has("gui_running")
     imap <D-]> <Esc>>>i
     imap <D-[> <Esc><<i
 
+    " wtf does bubble mean in this
+    " context? i don't know / these don't seem to work
     " Bubble single lines
     nmap <D-Up> [e
     nmap <D-Down> ]e
@@ -213,7 +219,7 @@ if has("gui_macvim") && has("gui_running")
 
   else
 
-    " I almost never use vim in terminal mode, so this is kind 
+    " I almost never use vim in terminal mode, so this is kind
     " of broken, alas. Should try to match it up with the above.
     "
     " Map command-[ and command-] to indenting or outdenting
@@ -284,23 +290,34 @@ map <Leader>1 :NERDTreeFind<CR>
 map <Leader>! :NERDTreeToggle<CR>
 
 
-" Dealing with splits - thanks, Andrey
-map <M-right> <C-w>l
-map <M-left> <C-w>h
-map <M-down> <C-w>j
-map <M-up> <C-w>k
+" Dealing with splits
+" with macmeta turned off, can't just use
+" M-arrow, so let's just use alt-shift arrows
+map <M-S-right> <C-w>l
+map <M-S-left> <C-w>h
+map <M-S-down> <C-w>j
+map <M-S-up> <C-w>k
 
-map <M-,> :split<CR><C-w>j " Horizontal split
-map <M-.> :vsplit<CR><C-w>l " Vertical split
-map <M-/> :close<CR> 
+" with macmeta turned off, alt-, produces ≤
+""Horizontal split
+" map <M-,> :split<CR><C-w>j
+map ≤ :split<CR><C-w>j
+" with macmeta turned off, alt-. produces ≥
+"" Vertical split
+" map <M-.> :vsplit<CR><C-w>l
+map ≥ :vsplit<CR><C-w>l
 
-map <M-<> <C-w>K " Convert vertical to horizontal split
-map <M->> <C-w>L " Convert horizontal to vertical split
+" Convert vertical to horizontal split
+" map <M-<> <C-w>K
+map ¯ <C-w>K
+" Convert horizontal to vertical split
+" map <M->> <C-w>L
+map ˘ <C-w>L
 
 """ Buffers
-map <M-]> :bnext<CR>
-map <M-[> :bprev<CR>
-map <M-backspace> :bdelete<CR>
+" map <M-]> :bnext<CR>
+" map <M-[> :bprev<CR>
+" map <M-backspace> :bdelete<CR>
 
 " sane movement
 nnoremap j gj
@@ -316,7 +333,9 @@ inoremap <Up> <C-o>gk
 vmap <left> h
 vmap <right> l
 " Retain visual select when indenting
-vmap > >gv 
+" NOTE: maybe this broke between vim versions??
+" I swear this used to work but does no longer.
+vmap > >gv
 vmap < <gv
 
 inoremap jj <Esc>
