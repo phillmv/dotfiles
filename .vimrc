@@ -403,7 +403,13 @@ nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
   autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
   au FileType ruby nmap <Leader>i :vsplit<CR> <C-w><C-l><C-]>
   au FileType ruby nmap <Leader>I <C-]>
- 
+
+  " via skalnik
+  let g:ruby_heredoc_syntax_filetypes = {
+    \ "graphql" : {
+    \   "start" : "GRAPHQL",
+    \},
+  \}
 " }
 
 
@@ -440,44 +446,43 @@ au FileType make set noexpandtab
 let g:html_indent_inctags="section\|dt"
 
 
-      
 " =======
 " PLUGINS
 " =======
 
+" use fzf
+set rtp+=/usr/local/opt/fzf
+
 " ctrlp {
-    let g:ctrlp_match_window = 'top'
-    let g:ctrlp_cmd = 'CtrlPMixed' " Search all the things.
-    " let g:ctrlp_working_path_mode = '' " disabled 
-    let g:ctrlp_lazy_update = 1
-    " let g:ctrlp_mruf_max = 25
-    let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-        \ 'file': '\.exe$\|\.so$\|\.dll$' }
+ let g:ctrlp_match_window = 'top'
+ " let g:ctrlp_working_path_mode = '' " disabled 
+ let g:ctrlp_lazy_update = 1
+ let g:ctrlp_custom_ignore = {
+       \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+       \ 'file': '\.exe$\|\.so$\|\.dll$' }
 
-    let g:ctrlp_user_command = {
-        \ 'types': {
-            \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-        \ },
-        \ 'fallback': 'find %s -type f'
-    \ }
-    " Reuse already-open buffers? (Default: 'Et')
-    let g:ctrlp_reuse_window = 'NERD'
+ let g:ctrlp_user_command = {
+       \ 'types': {
+       \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+       \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+       \ },
+       \ 'fallback': 'find %s -type f'
+       \ }
+ " Reuse already-open buffers? (Default: 'Et')
+ let g:ctrlp_reuse_window = 'NERD'
 
-    " per zerowidth
-    " let g:ctrlp_switch_buffer = 'ETVH' " jump to buffers where they're already open
-    let g:ctrlp_switch_buffer = 'etvh' " jump to buffers where they're already open in the current tab
-    let g:ctrlp_use_caching = 1
-    let g:ctrlp_max_files = 0 " no limits
-    let g:ctrlp_mruf_relative = 1 " only relative MRU files (not cross-project)
-    let g:ctrlp_working_path_mode = 'a'
+ " per zerowidth
+ let g:ctrlp_switch_buffer = 'etvh' " jump to buffers where they're already open in the current tab
+ let g:ctrlp_use_caching = 1
+ let g:ctrlp_max_files = 0 " no limits
+ let g:ctrlp_mruf_relative = 1 " only relative MRU files (not cross-project)
+ let g:ctrlp_working_path_mode = 'a'
+"  map <Leader>t :CtrlPMixed<CR> # deprecated in favour or FZF
 
-    nnoremap <silent> <leader>t :CtrlP<CR>
-    nnoremap <silent> <leader>r :CtrlPClearCache<CR>
-    "Ctags integration
-    nnoremap <leader>] :CtrlPTag<cr> 
-"}
+ "}
+
+map <Leader>t :FZF<CR>
+
 
 " rainbow parens {
 au VimEnter * RainbowParentheses
@@ -508,3 +513,44 @@ endfunc
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 map <Leader>U :UndotreeToggle<cr>
+
+
+" CUSTOM FUNCTIONS
+" via dctucker:
+" Set a nicer foldtext function
+set foldtext=MyFoldText()
+function! MyFoldText()
+    let line = getline(v:foldstart)
+    if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
+        let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
+        let initial = substitute( initial, '\t', '    ', 'g' )
+        let linenum = v:foldstart + 1
+        while linenum < v:foldend
+            let line = getline( linenum )
+            let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
+            if comment_content != ''
+                break
+            endif
+            let linenum = linenum + 1
+        endwhile
+        let sub = initial . ' ' . comment_content
+    else
+        let sub = substitute( line, '\t', repeat(' ', &tabstop), 'g' )
+        let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')
+        if startbrace == '{'
+            let line = getline(v:foldend)
+            let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
+            if endbrace == '}'
+                let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
+            endif
+        endif
+    endif
+    let n = v:foldend - v:foldstart + 1
+    let info = " " . n . " lines"
+    let sub = sub . "                                                                                                                  "
+    let num_w = getwinvar( 0, '&number' ) * getwinvar( 0, '&numberwidth' )
+    let fold_w = getwinvar( 0, '&foldcolumn' )
+    let sub = strpart( sub, 0, winwidth(0) - strlen( info ) - num_w - fold_w - 1 )
+    return sub . info
+endfunction
+set foldtext=MyFoldText()
