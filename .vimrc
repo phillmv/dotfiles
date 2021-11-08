@@ -9,6 +9,13 @@ set encoding=utf-8
 syntax on
 filetype plugin indent on
 
+set mouse+=a " mouse in terminal
+
+set termguicolors " real colours in term
+" set clipboard=unnamed " clipboard pls? doesn't seem to work
+" lets try the remap first
+set noshowmode " lol don't show insert
+
 set wrap                  " wrap long lines
 
 set autoindent            " indent at the same level of the previous line
