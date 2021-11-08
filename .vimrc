@@ -1,8 +1,13 @@
 set nocompatible
 
-call pathogen#infect()
+call plug#begin()
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+call plug#end()
+
 set encoding=utf-8
 
+call pathogen#infect()
 " -------------------------------
 "  vim options
 " -------------------------------
@@ -458,7 +463,7 @@ let g:html_indent_inctags="section\|dt"
 " =======
 
 " use fzf
-set rtp+=/usr/local/opt/fzf
+" set rtp+=/usr/local/opt/fzf
 
 " ctrlp {
  let g:ctrlp_match_window = 'top'
@@ -489,6 +494,7 @@ set rtp+=/usr/local/opt/fzf
  "}
 
 map <Leader>t :FZF<CR>
+let g:fzf_layout = { 'down': '40%' }
 
 
 " rainbow parens {
