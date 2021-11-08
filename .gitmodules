@@ -31,9 +31,3 @@
 [submodule ".vim/bundle/vim-javascript"]
 	path = .vim/bundle/vim-javascript
 	url = git@github.com:pangloss/vim-javascript.git
-[submodule ".vim/plugged/fzf"]
-	path = .vim/plugged/fzf
-	url = https://github.com/junegunn/fzf.git
-[submodule ".vim/plugged/fzf.vim"]
-	path = .vim/plugged/fzf.vim
-	url = https://github.com/junegunn/fzf.vim.git
