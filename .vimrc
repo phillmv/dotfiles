@@ -299,6 +299,44 @@ if has("gui_macvim") && has("gui_running")
     imap <C-8> <Esc>8gt
     map  <C-9> 9gt
     imap <C-9> <Esc>9gt
+
+    " alt + t
+    map † :tabnew<CR>
+    " alt + 1
+    map ¡ 1gt
+    " alt + 2
+    map ™ 2gt
+
+    " alt-{
+    map ” gT
+    " alt-}
+    map ’ gt
+    " alt-w
+    map ∑ :q<CR>
+
+    " TComment
+    " alt-'
+    nmap æ  :TComment<CR>
+    vmap æ  :TComment<CR>
+    imap æ  <Esc>:TComment<CR>a
+
+       " taken from janus:
+
+    " Map command-[ and command-] to indenting or outdenting
+    " while keeping the original selection in visual mode
+    " alt-]
+    vmap ‘ >gv
+    " alt-[
+    vmap “ <gv
+
+    nmap ‘ >>
+    nmap “ <<
+
+    omap ‘ >>
+    omap “ <<
+
+    imap ‘  <Esc>>>i
+    imap “ <Esc><<i
 endif
 
 
@@ -319,10 +357,16 @@ map <Leader>! :NERDTreeToggle<CR>
 " Dealing with splits
 " with macmeta turned off, can't just use
 " M-arrow, so let's just use alt-shift arrows
-map <M-S-right> <C-w>l
 map <M-S-left> <C-w>h
 map <M-S-down> <C-w>j
 map <M-S-up> <C-w>k
+map <M-S-right> <C-w>l
+
+" for terminal equivalent escape codes:
+map <Esc>[1;10D <C-w>h
+map <Esc>[1;10B <C-w>j
+map <Esc>[1;10A <C-w>k
+map <Esc>[1;10C <C-w>l
 
 " with macmeta turned off, alt-, produces ≤
 ""Horizontal split
