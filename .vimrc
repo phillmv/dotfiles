@@ -3,11 +3,13 @@ set nocompatible
 call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'ojroques/vim-oscyank'
 call plug#end()
+
+call pathogen#infect()
 
 set encoding=utf-8
 
-call pathogen#infect()
 " -------------------------------
 "  vim options
 " -------------------------------
@@ -142,6 +144,18 @@ vmap <S-down> j
 vmap <S-left> h
 vmap <S-right> l
 
+if has("clipboard")
+  " copy and paste
+  vmap <C-c> "+yi
+  vmap <C-x> "+c
+  vmap <C-v> c<ESC>"+p
+  imap <C-v> <ESC>"+pa
+endif
+
+if !empty($CODESPACES)
+  " copy
+  vmap <C-c> :OSCYank<CR>
+endif
 
 if has("gui_macvim") && has("gui_running")
 
