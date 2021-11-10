@@ -108,6 +108,46 @@ set backupdir=~/.vim/_backup/    " where to put backup files.
 set directory=~/.vim/_temp/      " where to put swap files.
 
 " -------------------------------
+"  Key bindings
+" -------------------------------
+
+" Movement & making vim like 'normal' editors
+" -------------------------------
+
+" I like to use shift+arrows for selecting:
+imap <S-up> <Esc>vk
+imap <S-down> <Esc>vj
+imap <S-left> <Esc>vh
+imap <S-right> <Esc>vl
+
+map <S-up> <Esc>vk
+map <S-down> <Esc>vj
+map <S-left> <Esc>vh
+map <S-right> <Esc>vl
+
+vmap <S-up> k
+vmap <S-down> j
+vmap <S-left> h
+vmap <S-right> l
+
+" instead of selectmode, let's just go to visual mode
+" when pressing shift-arrows
+set selectmode=
+
+"  Allow me to use Ctrl-C for copying to system buffer
+" -------------------------------
+if has("clipboard")
+  " copy and paste
+  vmap <C-c> "+yi
+  vmap <C-x> "+c
+  vmap <C-v> c<ESC>"+p
+  imap <C-v> <ESC>"+pa
+endif
+
+if !empty($CODESPACES)
+  " copy
+  vmap <C-c> :OSCYank<CR>
+endif
 
 
 ""
@@ -140,41 +180,7 @@ set directory=~/.vim/_temp/      " where to put swap files.
 "     set statusline+=%P
 " endif
 
-""
-"" KEY BINDINGS
-""
-
-" instead of selectmode, let's just go to visual mode
-" when pressing shift-arrows
-set selectmode=
-imap <S-up> <Esc>vk
-imap <S-down> <Esc>vj
-imap <S-left> <Esc>vh
-imap <S-right> <Esc>vl
-
-map <S-up> <Esc>vk
-map <S-down> <Esc>vj
-map <S-left> <Esc>vh
-map <S-right> <Esc>vl
-
-vmap <S-up> k
-vmap <S-down> j
-vmap <S-left> h
-vmap <S-right> l
-
-if has("clipboard")
-  " copy and paste
-  vmap <C-c> "+yi
-  vmap <C-x> "+c
-  vmap <C-v> c<ESC>"+p
-  imap <C-v> <ESC>"+pa
-endif
-
-if !empty($CODESPACES)
-  " copy
-  vmap <C-c> :OSCYank<CR>
-endif
-
+" Environment specific options:
 if has("gui_macvim") && has("gui_running")
 
     set fuoptions=maxvert,maxhorz
@@ -183,13 +189,8 @@ if has("gui_macvim") && has("gui_running")
     set guifont=Bitstream\ Vera\ Sans\ Mono:h13
     set guioptions-=T         " no macvim toolbar
 
-    " set macmeta           " Necessary for using meta key in mappings on OSX
-    " but also turns off the osx style inserting 'special' characters
-    " let macvim_skip_cmd_opt_movement = 1 " Prevent MacVim from mapping fake HOME/END to M-arrow keys.
-    "let macvim_hig_shift_movement = 1 " mvim shift-arrow-keys
-
-
-    " alas I am still a fan of the SYSTEM WIDE DEFAULT OS BEHAVIOUR
+    " cmd key + arrows and alt key plus arrows should behave like other text
+    " field editors
     map <D-right> $
     map <D-left> 0
     imap <D-right> <Esc>$a
@@ -253,21 +254,32 @@ if has("gui_macvim") && has("gui_running")
     imap <D-9> <Esc>9gt
 
     " TComment
-
     nmap <D-'>  :TComment<CR>
     vmap <D-'>  :TComment<CR>
     imap <D-'>  <Esc>:TComment<CR>a
-    " vmap <D-">  <Plug>NERDCommenterAlignBoth gv
-    " vmap <D-\>  <Plug>NERDCommenterToggle gv
-    " nmap <D-\>  <Plug>NERDCommenterToggle
 
   else
+    " taken from janus:
 
-    " I almost never use vim in terminal mode, so this is kind
-    " of broken, alas. Should try to match it up with the above.
-    "
     " Map command-[ and command-] to indenting or outdenting
-    " while keeping the original selection in visual mode
+    " while keeping the original selection in visual mode.
+    "
+    " In OSX, pressing alt sends random characters & so:
+    " alt-]
+    vmap ‘ >gv
+    " alt-[
+    vmap “ <gv
+
+    nmap ‘ >>
+    nmap “ <<
+
+    omap ‘ >>
+    omap “ <<
+
+    imap ‘  <Esc>>>i
+    imap “ <Esc><<i
+
+    " Same as above but if your <A> key works in the terminal:
     vmap <A-]> >gv
     vmap <A-[> <gv
 
@@ -280,23 +292,12 @@ if has("gui_macvim") && has("gui_running")
     imap <A-]> <Esc>>>i
     imap <A-[> <Esc><<i
 
-    " Bubble single lines
-    nmap <C-Up> [e
-    nmap <C-Down> ]e
-    nmap <C-k> [e
-    nmap <C-j> ]e
-
-    " Bubble multiple lines
-    vmap <C-Up> [egv
-    vmap <C-Down> ]egv
-    vmap <C-k> [egv
-    vmap <C-j> ]egv
-
     " Make shift-insert work like in Xterm
     map <S-Insert> <MiddleMouse>
     map! <S-Insert> <MiddleMouse>
 
     " Map Control-# to switch tabs
+    " TODO: finish replacing with Alt equiv
     map  <C-0> 0gt
     imap <C-0> <Esc>0gt
     map  <C-1> 1gt
@@ -325,11 +326,12 @@ if has("gui_macvim") && has("gui_running")
     " alt + 2
     map ™ 2gt
 
+    " move between tabs using alt shift [ 
     " alt-{
     map ” gT
     " alt-}
     map ’ gt
-    " alt-w
+    " alt-w to close tabs
     map ∑ :q<CR>
 
     " TComment
@@ -337,24 +339,6 @@ if has("gui_macvim") && has("gui_running")
     nmap æ  :TComment<CR>
     vmap æ  :TComment<CR>
     imap æ  <Esc>:TComment<CR>a
-
-       " taken from janus:
-
-    " Map command-[ and command-] to indenting or outdenting
-    " while keeping the original selection in visual mode
-    " alt-]
-    vmap ‘ >gv
-    " alt-[
-    vmap “ <gv
-
-    nmap ‘ >>
-    nmap “ <<
-
-    omap ‘ >>
-    omap “ <<
-
-    imap ‘  <Esc>>>i
-    imap “ <Esc><<i
 endif
 
 
