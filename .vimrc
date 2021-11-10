@@ -1,8 +1,11 @@
+" Hello, friend.
+" There are many .vimrcs, but this one is mine.
+"
+" This file is roughly split into the following sections:
+" Packaging, Customization, Bindings, Files, Plugins and Misc Fun
+"
+" In the beginning there was vi, and that could be Improved:
 set nocompatible
-
-" what are the different sections?
-" packages, vim options { formatting, editing, commands, viewing? }, key
-" bindings { movement, editing?, cool tools }, file handling?
 
 " -------------------------------
 " packaging
@@ -18,7 +21,7 @@ call pathogen#infect()
 packadd! matchit
 
 " -------------------------------
-"  vim options
+"  vim customization
 " -------------------------------
 
 syntax on
@@ -111,8 +114,25 @@ set directory=~/.vim/_temp/      " where to put swap files.
 "  Key bindings
 " -------------------------------
 
-" Movement & making vim like 'normal' editors
+inoremap jj <Esc>
+
+" Movement & making vim like gui editors
 " -------------------------------
+
+" sane movement
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up> gk
+vnoremap <Down> gj
+vnoremap <Up> gk
+inoremap <Down> <C-o>gj
+inoremap <Up> <C-o>gk
+vmap <left> h
+vmap <right> l
+
 
 " I like to use shift+arrows for selecting:
 imap <S-up> <Esc>vk
@@ -145,40 +165,182 @@ if has("clipboard")
 endif
 
 if !empty($CODESPACES)
-  " copy
+  " copy over ssh
   vmap <C-c> :OSCYank<CR>
 endif
 
+" alt-arrows, alt-bs should skip over words
+" TODO: get this to work for vmap? & alt
+imap <M-left> <Esc>Bi
+imap <Esc>[1;9D <Esc>Bi
 
-""
-"" STATUS
-""
+imap <M-right> <Esc>lWi
+imap <Esc>[1;9C <Esc>lWi
 
-" superseded by airline, so commented out
-" if has('cmdline_info')
-"     set ruler             " show the ruler
-"     " a ruler on steroids
-"     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
-"     set showcmd           " show partial commands in status line and
-"                           " selected characters/lines in visual mode
-" endif
+imap <M-backspace> <Esc>B"_dwi
 
-"" superseded by airline, so commented out
-" if has('statusline')
-"     set laststatus=2     
-"     " a statusline, also on steroids
-"     set statusline=%m
-"     set statusline+=%t
-"     set statusline+=%<\ 
-"     set statusline+=[%{strlen(&ft)?&ft:'none'},
-"     set statusline+=\ %{strlen(&fenc)?&fenc:'none'},
-"     set statusline+=\ %{&ff}]
-"     set statusline+=%=
-"     set statusline+=:\b%n
-"     set statusline+=%{fugitive#statusline()}
-"     set statusline+=%r%w\ %l,%c%V\ [%b,0x%-8B]
-"     set statusline+=%P
-" endif
+" switching between tabs
+" -------------------------------
+map  <D-0> 0gt
+imap <D-0> <Esc>0gt
+map  <D-1> 1gt
+imap <D-1> <Esc>1gt
+map  <D-2> 2gt
+imap <D-2> <Esc>2gt
+map  <D-3> 3gt
+imap <D-3> <Esc>3gt
+map  <D-4> 4gt
+imap <D-4> <Esc>4gt
+map  <D-5> 5gt
+imap <D-5> <Esc>5gt
+map  <D-6> 6gt
+imap <D-6> <Esc>6gt
+map  <D-7> 7gt
+imap <D-7> <Esc>7gt
+map  <D-8> 8gt
+imap <D-8> <Esc>8gt
+map  <D-9> 9gt
+imap <D-9> <Esc>9gt
+
+" by default in OSX alt sends different chars
+" so here we map the alt-chars next to the vim equiv
+map  †      :tabnew<CR>
+map  <A-t> :tabnew<CR>
+
+map º 0gt
+map  <A-0> 0gt
+imap <A-0> <Esc>0gt
+
+map ¡ 1gt
+map  <A-1> 1gt
+imap <A-1> <Esc>1gt
+
+map ™ 2gt
+map  <A-2> 2gt
+imap <A-2> <Esc>2gt
+
+map £ 3gt
+map  <A-3> 3gt
+imap <A-3> <Esc>3gt
+
+map ¢ 4gt
+map  <A-4> 4gt
+imap <A-4> <Esc>4gt
+
+map ∞ 5gt
+map  <A-5> 5gt
+imap <A-5> <Esc>5gt
+
+map § 6gt
+map  <A-6> 6gt
+imap <A-6> <Esc>6gt
+
+map ¶ 7gt
+map  <A-7> 7gt
+imap <A-7> <Esc>7gt
+
+map • 8gt
+map  <A-8> 8gt
+imap <A-8> <Esc>8gt
+
+map ª 9gt
+map  <A-9> 9gt
+imap <A-9> <Esc>9gt
+
+" move to next/prev tab
+map ” gT
+map  <A-{> gT
+" alt-}
+map ’ gt
+map  <A-}> gt
+" alt-w to close tabs
+map ∑ :q<CR>
+map <A-w> :q<CR>
+
+" splits
+" -------------------------------
+
+" with macmeta turned off, can't just use
+" M-arrow, so let's just use alt-shift arrows
+map <M-S-left> <C-w>h
+map <M-S-down> <C-w>j
+map <M-S-up> <C-w>k
+map <M-S-right> <C-w>l
+
+" for terminal equivalent escape codes:
+map <Esc>[1;10D <C-w>h
+map <Esc>[1;10B <C-w>j
+map <Esc>[1;10A <C-w>k
+map <Esc>[1;10C <C-w>l
+
+" with macmeta turned off, alt-, produces ≤
+""Horizontal split
+map <M-,> :split<CR><C-w>j
+map ≤ :split<CR><C-w>j
+" with macmeta turned off, alt-. produces ≥
+"" Vertical split
+map <M-.> :vsplit<CR><C-w>l
+map ≥ :vsplit<CR><C-w>l
+
+" Convert vertical to horizontal split
+map <M-<> <C-w>K
+map ¯ <C-w>K
+" Convert horizontal to vertical split
+map <M->> <C-w>L
+map ˘ <C-w>L
+
+" identation
+" -------------------------------
+" taken from janus:
+
+" Map command-[ and command-] / alt-[ and alt-] to indenting or outdenting
+" while keeping the original selection in visual mode.
+
+vmap ‘ >gv
+vmap <A-]> >gv
+vmap <D-]> >gv
+
+vmap “ <gv
+vmap <A-[> <gv
+vmap <D-[> <gv
+
+nmap ‘ >>
+nmap <A-]> >>
+nmap <D-]> >>
+
+nmap “ <<
+nmap <A-[> <<
+nmap <D-[> <<
+
+omap ‘ >>
+omap <A-]> >>
+omap <D-]> >>
+
+omap “ <<
+omap <A-[> <<
+omap <D-[> <<
+
+imap ‘  <Esc>>>i
+imap <A-]> <Esc>>>i
+imap <D-]> <Esc>>>i
+
+imap “ <Esc><<i
+imap <A-[> <Esc><<i
+imap <D-[> <Esc><<i
+
+" commenting 
+" -------------------------------
+nmap <D-'>  :TComment<CR>
+vmap <D-'>  :TComment<CR>
+imap <D-'>  <Esc>:TComment<CR>a
+
+nmap æ  :TComment<CR>
+vmap æ  :TComment<CR>
+imap æ  <Esc>:TComment<CR>a
+
+nmap <A-'>  :TComment<CR>
+vmap <A-'>  :TComment<CR>
+imap <A-'>  <Esc>:TComment<CR>a
 
 " Environment specific options:
 if has("gui_macvim") && has("gui_running")
@@ -196,221 +358,29 @@ if has("gui_macvim") && has("gui_running")
     imap <D-right> <Esc>$a
     imap <D-left> <Esc>0i
 
-    imap <M-left> <Esc>Bi
-    imap <M-right> <Esc>lWi
-    imap <M-backspace> <Esc>B"_dwi
-
-    " taken from janus:
-
-    " Map command-[ and command-] to indenting or outdenting
-    " while keeping the original selection in visual mode
-    vmap <D-]> >gv
-    vmap <D-[> <gv
-
-    nmap <D-]> >>
-    nmap <D-[> <<
-
-    omap <D-]> >>
-    omap <D-[> <<
-
-    imap <D-]> <Esc>>>i
-    imap <D-[> <Esc><<i
-
-    " wtf does bubble mean in this
-    " context? i don't know / these don't seem to work
-    " Bubble single lines
-    nmap <D-Up> [e
-    nmap <D-Down> ]e
-    nmap <D-k> [e
-    nmap <D-j> ]e
-
-    " Bubble multiple lines
-    vmap <D-Up> [egv
-    vmap <D-Down> ]egv
-    vmap <D-k> [egv
-    vmap <D-j> ]egv
-
-
-    " allow for switching between tabs
-    map  <D-0> 0gt
-    imap <D-0> <Esc>0gt
-    map  <D-1> 1gt
-    imap <D-1> <Esc>1gt
-    map  <D-2> 2gt
-    imap <D-2> <Esc>2gt
-    map  <D-3> 3gt
-    imap <D-3> <Esc>3gt
-    map  <D-4> 4gt
-    imap <D-4> <Esc>4gt
-    map  <D-5> 5gt
-    imap <D-5> <Esc>5gt
-    map  <D-6> 6gt
-    imap <D-6> <Esc>6gt
-    map  <D-7> 7gt
-    imap <D-7> <Esc>7gt
-    map  <D-8> 8gt
-    imap <D-8> <Esc>8gt
-    map  <D-9> 9gt
-    imap <D-9> <Esc>9gt
-
-    " TComment
-    nmap <D-'>  :TComment<CR>
-    vmap <D-'>  :TComment<CR>
-    imap <D-'>  <Esc>:TComment<CR>a
-
   else
-    " taken from janus:
-
-    " Map command-[ and command-] to indenting or outdenting
-    " while keeping the original selection in visual mode.
-    "
-    " In OSX, pressing alt sends random characters & so:
-    " alt-]
-    vmap ‘ >gv
-    " alt-[
-    vmap “ <gv
-
-    nmap ‘ >>
-    nmap “ <<
-
-    omap ‘ >>
-    omap “ <<
-
-    imap ‘  <Esc>>>i
-    imap “ <Esc><<i
-
-    " Same as above but if your <A> key works in the terminal:
-    vmap <A-]> >gv
-    vmap <A-[> <gv
-
-    nmap <A-]> >>
-    nmap <A-[> <<
-
-    omap <A-]> >>
-    omap <A-[> <<
-
-    imap <A-]> <Esc>>>i
-    imap <A-[> <Esc><<i
 
     " Make shift-insert work like in Xterm
     map <S-Insert> <MiddleMouse>
     map! <S-Insert> <MiddleMouse>
-
-    " Map Control-# to switch tabs
-    " TODO: finish replacing with Alt equiv
-    map  <C-0> 0gt
-    imap <C-0> <Esc>0gt
-    map  <C-1> 1gt
-    imap <C-1> <Esc>1gt
-    map  <C-2> 2gt
-    imap <C-2> <Esc>2gt
-    map  <C-3> 3gt
-    imap <C-3> <Esc>3gt
-    map  <C-4> 4gt
-    imap <C-4> <Esc>4gt
-    map  <C-5> 5gt
-    imap <C-5> <Esc>5gt
-    map  <C-6> 6gt
-    imap <C-6> <Esc>6gt
-    map  <C-7> 7gt
-    imap <C-7> <Esc>7gt
-    map  <C-8> 8gt
-    imap <C-8> <Esc>8gt
-    map  <C-9> 9gt
-    imap <C-9> <Esc>9gt
-
-    " alt + t
-    map † :tabnew<CR>
-    " alt + 1
-    map ¡ 1gt
-    " alt + 2
-    map ™ 2gt
-
-    " move between tabs using alt shift [ 
-    " alt-{
-    map ” gT
-    " alt-}
-    map ’ gt
-    " alt-w to close tabs
-    map ∑ :q<CR>
-
-    " TComment
-    " alt-'
-    nmap æ  :TComment<CR>
-    vmap æ  :TComment<CR>
-    imap æ  <Esc>:TComment<CR>a
 endif
 
-
-
 " ----------------------------------
-" MAPPINGS
+" Misc bindings:
 " ----------------------------------
  " C-i goes 'forwards'
  " C-o goes 'backwards'
- " leader-p brigns up ctags search
 map <C-}> <C-w><C-]>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+" map <A-]> :vsp <CR>:exec('tag '.expand('<cword>'))<CR>
 map <Leader>1 :NERDTreeFind<CR>
 map <Leader>! :NERDTreeToggle<CR>
 
-
-" Dealing with splits
-" with macmeta turned off, can't just use
-" M-arrow, so let's just use alt-shift arrows
-map <M-S-left> <C-w>h
-map <M-S-down> <C-w>j
-map <M-S-up> <C-w>k
-map <M-S-right> <C-w>l
-
-" for terminal equivalent escape codes:
-map <Esc>[1;10D <C-w>h
-map <Esc>[1;10B <C-w>j
-map <Esc>[1;10A <C-w>k
-map <Esc>[1;10C <C-w>l
-
-" with macmeta turned off, alt-, produces ≤
-""Horizontal split
-" map <M-,> :split<CR><C-w>j
-map ≤ :split<CR><C-w>j
-" with macmeta turned off, alt-. produces ≥
-"" Vertical split
-" map <M-.> :vsplit<CR><C-w>l
-map ≥ :vsplit<CR><C-w>l
-
-" Convert vertical to horizontal split
-" map <M-<> <C-w>K
-map ¯ <C-w>K
-" Convert horizontal to vertical split
-" map <M->> <C-w>L
-map ˘ <C-w>L
 
 """ Buffers
 " map <M-]> :bnext<CR>
 " map <M-[> :bprev<CR>
 " map <M-backspace> :bdelete<CR>
-
-" sane movement
-nnoremap j gj
-nnoremap k gk
-vnoremap j gj
-vnoremap k gk
-nnoremap <Down> gj
-nnoremap <Up> gk
-vnoremap <Down> gj
-vnoremap <Up> gk
-inoremap <Down> <C-o>gj
-inoremap <Up> <C-o>gk
-vmap <left> h
-vmap <right> l
-" Retain visual select when indenting
-" NOTE: maybe this broke between vim versions??
-" I swear this used to work but does no longer.
-vmap > >gv
-vmap < <gv
-
-inoremap jj <Esc>
 
 " also taken from Janus:
 " use :w!! to write to a file using sudo if you forgot to 'sudo vim file'
@@ -453,10 +423,9 @@ nmap <silent> <leader>ul :t.\|s/./=/g\|:nohls<cr>
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
 
-
-""
+" -------------------------------
 "" HANDLING FILES
-""
+" -------------------------------
 " ruby {
   auto BufNewFile,BufRead [cC]apfile set filetype=ruby
   auto BufNewFile,BufRead Gemfile* set filetype=ruby
@@ -465,7 +434,7 @@ nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
   auto BufNewFile,BufRead *.ru set filetype=ruby
   auto BufNewFile,BufRead *.erb set filetype=eruby
 
-  "lol assert pipeline
+  "lol asset pipeline
   autocmd BufNewFile,BufRead *.jsx.erb let b:jsx_ext_found = 1
   autocmd BufNewFile,BufRead *.jsx.erb set filetype=javascript
 
@@ -518,41 +487,11 @@ au FileType make set noexpandtab
 let g:html_indent_inctags="section\|dt"
 
 
-" =======
+" -------------------------------
 " PLUGINS
-" =======
+" -------------------------------
 
-" use fzf
-" set rtp+=/usr/local/opt/fzf
-
-" ctrlp {
- let g:ctrlp_match_window = 'top'
- " let g:ctrlp_working_path_mode = '' " disabled 
- let g:ctrlp_lazy_update = 1
- let g:ctrlp_custom_ignore = {
-       \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-       \ 'file': '\.exe$\|\.so$\|\.dll$' }
-
- let g:ctrlp_user_command = {
-       \ 'types': {
-       \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-       \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-       \ },
-       \ 'fallback': 'find %s -type f'
-       \ }
- " Reuse already-open buffers? (Default: 'Et')
- let g:ctrlp_reuse_window = 'NERD'
-
- " per zerowidth
- let g:ctrlp_switch_buffer = 'etvh' " jump to buffers where they're already open in the current tab
- let g:ctrlp_use_caching = 1
- let g:ctrlp_max_files = 0 " no limits
- let g:ctrlp_mruf_relative = 1 " only relative MRU files (not cross-project)
- let g:ctrlp_working_path_mode = 'a'
-"  map <Leader>t :CtrlPMixed<CR> # deprecated in favour or FZF
-
- "}
-
+" fzf ftw
 map <Leader>t :FZF<CR>
 let g:fzf_layout = { 'down': '40%' }
 
@@ -565,8 +504,18 @@ au VimEnter * RainbowParentheses
 " au Syntax * RainbowParenthesesLoadBraces
 " }
 
+" set up default nerdtree settings
+"autocmd vimenter * NERDTree " open by default
+"autocmd vimenter * if !argc() | NERDTree | endif " open even if no files are selected
+" autocmd VimEnter * wincmd p     " set focus on opened buffer and not nerdtree
+" quit when nerdtree is the last buffer standing
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+map <Leader>U :UndotreeToggle<cr>
+
+
 " -------------------
-" MISC FUN
+" MISC FUN(ctions)
 " -------------------
 
 " Show syntax highlighting groups for word under cursor
@@ -578,17 +527,7 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-" set up default nerdtree settings
-"autocmd vimenter * NERDTree " open by default
-"autocmd vimenter * if !argc() | NERDTree | endif " open even if no files are selected
-" autocmd VimEnter * wincmd p     " set focus on opened buffer and not nerdtree
-" quit when nerdtree is the last buffer standing
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-map <Leader>U :UndotreeToggle<cr>
-
-
-" CUSTOM FUNCTIONS
 " via dctucker:
 " Set a nicer foldtext function
 set foldtext=MyFoldText()
@@ -627,3 +566,63 @@ function! MyFoldText()
     return sub . info
 endfunction
 set foldtext=MyFoldText()
+
+" misc deprecated stuff that i haven't the heart to delete _just yet_
+" =====================================================================
+" ctrlp {
+"  let g:ctrlp_match_window = 'top'
+"  let g:ctrlp_lazy_update = 1
+"  let g:ctrlp_custom_ignore = {
+"        \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+"        \ 'file': '\.exe$\|\.so$\|\.dll$' }
+"
+"  let g:ctrlp_user_command = {
+"        \ 'types': {
+"        \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+"        \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+"        \ },
+"        \ 'fallback': 'find %s -type f'
+"        \ }
+"  " Reuse already-open buffers? (Default: 'Et')
+"  let g:ctrlp_reuse_window = 'NERD'
+"
+"  " per zerowidth
+"  let g:ctrlp_switch_buffer = 'etvh' " jump to buffers where they're already open in the current tab
+"  let g:ctrlp_use_caching = 1
+"  let g:ctrlp_max_files = 0 " no limits
+"  let g:ctrlp_mruf_relative = 1 " only relative MRU files (not cross-project)
+"  let g:ctrlp_working_path_mode = 'a'
+" "  map <Leader>t :CtrlPMixed<CR> # deprecated in favour or FZF
+
+ "}
+
+"
+""
+"" STATUS
+""
+
+" superseded by airline, so commented out
+" if has('cmdline_info')
+"     set ruler             " show the ruler
+"     " a ruler on steroids
+"     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
+"     set showcmd           " show partial commands in status line and
+"                           " selected characters/lines in visual mode
+" endif
+
+"" superseded by airline, so commented out
+" if has('statusline')
+"     set laststatus=2     
+"     " a statusline, also on steroids
+"     set statusline=%m
+"     set statusline+=%t
+"     set statusline+=%<\ 
+"     set statusline+=[%{strlen(&ft)?&ft:'none'},
+"     set statusline+=\ %{strlen(&fenc)?&fenc:'none'},
+"     set statusline+=\ %{&ff}]
+"     set statusline+=%=
+"     set statusline+=:\b%n
+"     set statusline+=%{fugitive#statusline()}
+"     set statusline+=%r%w\ %l,%c%V\ [%b,0x%-8B]
+"     set statusline+=%P
+" endif
