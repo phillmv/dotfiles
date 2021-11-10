@@ -20,11 +20,10 @@ packadd! matchit
 " -------------------------------
 "  vim options
 " -------------------------------
-set encoding=utf-8
-set fileencoding=utf-8
 
 syntax on
 filetype plugin indent on
+colorscheme reslate
 
 " terminal handling options
 " -------------------------------
@@ -34,7 +33,7 @@ set termguicolors " real colours in term
 
 " rendering & editing
 " -------------------------------
-colorscheme reslate
+set encoding=utf-8
 
 set wrap                  " wrap long lines
 set number
@@ -52,9 +51,10 @@ set expandtab
 set shiftwidth=2          " when reindenting how far?
 set softtabstop=2
 " }
-set smarttab
+set smarttab              " always use spaces
 
 " file handling:
+" -------------------------------
 set autoread              " load file when it changes
 " no hidden, no autowrite
 " everything buffer wise that happens is 'intentional'
@@ -96,7 +96,7 @@ if &listchars ==# 'eol:$'
 endif
 
 if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j " Delete comment character when joining commented lines
+  set formatoptions+=j            " Delete comment character when joining commented lines
 endif
 
 " ctags
