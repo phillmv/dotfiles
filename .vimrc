@@ -1,5 +1,12 @@
 set nocompatible
 
+" what are the different sections?
+" packages, vim options { formatting, editing, commands, viewing? }, key
+" bindings { movement, editing?, cool tools }, file handling?
+
+" -------------------------------
+" packaging
+" -------------------------------
 call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -8,32 +15,54 @@ call plug#end()
 
 call pathogen#infect()
 
-set encoding=utf-8
+packadd! matchit
 
 " -------------------------------
 "  vim options
 " -------------------------------
+set encoding=utf-8
+set fileencoding=utf-8
+
 syntax on
 filetype plugin indent on
 
-set mouse+=a " mouse in terminal
+" terminal handling options
+" -------------------------------
 
+set mouse+=a " mouse in terminal
 set termguicolors " real colours in term
-" set clipboard=unnamed " clipboard pls? doesn't seem to work
-" lets try the remap first
-set noshowmode " lol don't show insert
+
+" rendering & editing
+" -------------------------------
+colorscheme reslate
 
 set wrap                  " wrap long lines
+set number
+set ruler
+set visualbell            " shut the fuck up
 
+set display+=lastline     " when lines overflow, show me the line, not an @
 set autoindent            " indent at the same level of the previous line
+set backspace=2           " allow backspacing over everything in insert mode
+
 set tabstop=2
+
+" use spaces over tabs {
+set expandtab
 set shiftwidth=2          " when reindenting how far?
 set softtabstop=2
-set expandtab
-set backspace=2           " allow backspacing over everything in insert mode
+" }
 set smarttab
 
-" Searching
+" file handling:
+set autoread              " load file when it changes
+" no hidden, no autowrite
+" everything buffer wise that happens is 'intentional'
+
+" user interface tweaks
+" -------------------------------
+
+" searching
 set hlsearch              " highlight search
 set incsearch
 set ignorecase
@@ -41,16 +70,9 @@ set smartcase             " ... unless they contain at least one capital letter
 set showmatch             " show matching parens, etc
 " clear search:
 nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-packadd! matchit
 
-
-set autoread              " load file when it changes
-" no hidden, no autowrite
-" everything buffer wise that happens is 'intentional'
-
-set number
-set ruler
-set visualbell            " shut the fuck up
+" w/vim-airline, the mode change msg is redundant:
+set noshowmode
 
 set wildmenu
 set wildignore+=*.log,*.jpg,*.png,*.gif,*.swp,vendor/rails/**
@@ -67,7 +89,6 @@ endif
 if !&sidescrolloff
   set sidescrolloff=5
 endif
-set display+=lastline
 
 "" what's shown if 'set list' is used
 if &listchars ==# 'eol:$'
@@ -82,14 +103,11 @@ endif
 set tags+=gems.tags
 set tags+=stdlib.tags
 
-""
-"" Backup and swap files
-""
-
+" Backup and swap files
 set backupdir=~/.vim/_backup/    " where to put backup files.
 set directory=~/.vim/_temp/      " where to put swap files.
 
-colorscheme reslate
+" -------------------------------
 
 
 ""
