@@ -267,6 +267,12 @@ map <M-S-down> <C-w>j
 map <M-S-up> <C-w>k
 map <M-S-right> <C-w>l
 
+" using mapping out Alt specifically:
+map <A-S-left> <C-w>h
+map <A-S-down> <C-w>j
+map <A-S-up> <C-w>k
+map <A-S-right> <C-w>l
+
 " for terminal equivalent escape codes:
 map <Esc>[1;10D <C-w>h
 map <Esc>[1;10B <C-w>j
