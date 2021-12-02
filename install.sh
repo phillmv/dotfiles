@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-./script/setup &
+# ./script/setup &
 exit 0
