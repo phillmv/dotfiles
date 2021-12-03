@@ -7,4 +7,4 @@ if [ ! -z "$CODESPACES" ]; then
   ./script/setup-codespaces.sh
 fi
 
-./script/setup
+./script/setup.sh
