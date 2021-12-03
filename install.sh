@@ -1,4 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
+exec > >(tee -a -i $HOME/dotfiles_install.log)
+exec 2>&1
+set -x
 
-# ./script/setup &
-exit 0
+if [ ! -z "$CODESPACES" ]; then
+  ./script/setup-codespaces.sh
+fi
+
+./script/setup

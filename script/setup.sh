@@ -1,8 +1,4 @@
-#!/usr/bin/env bash
-
-exec > >(tee -a -i $HOME/dotfiles_install.log)
-exec 2>&1
-set -x
+#!/bin/bash
 
 #ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
 ln -s $(pwd)/.vimrc $HOME/.vimrc
