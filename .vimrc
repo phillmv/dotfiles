@@ -32,6 +32,10 @@ colorscheme reslate
 " -------------------------------
 
 set mouse+=a " mouse in terminal
+if !has("gui_macvim") && !has("gui_running")
+  set ttymouse=xterm2 " supposed to help with tmux
+endif
+
 set termguicolors " real colours in term
 
 " rendering & editing
