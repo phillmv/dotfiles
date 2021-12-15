@@ -36,6 +36,14 @@ if !has("gui_macvim") && !has("gui_running")
   set ttymouse=xterm2 " supposed to help with tmux
 endif
 
+" https://stackoverflow.com/questions/7000960/in-vim-why-doesnt-my-mouse-work-past-the-220th-column
+" slash also in tmux:
+if has("mouse_sgr")
+    set ttymouse=sgr
+else
+    set ttymouse=xterm2
+end
+
 set termguicolors " real colours in term
 
 " rendering & editing
