@@ -14,6 +14,7 @@ call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ojroques/vim-oscyank'
+Plug 'preservim/tagbar'
 call plug#end()
 
 call pathogen#infect()
@@ -478,6 +479,8 @@ nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
   au FileType go nmap <Leader>gd <Plug>(go-doc)
   au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
   au FileType go nmap <Leader>s <Plug>(go-implements)
+  au FileType go nmap <Leader>g :TagbarToggle<CR>
+  au FileType go nmap <Leader>] :GoImplements<CR>
 
   au FileType go nmap <leader>r <Plug>(go-run)
   au FileType go nmap <leader>b <Plug>(go-build)
@@ -523,13 +526,17 @@ au VimEnter * RainbowParentheses
 " }
 
 " set up default nerdtree settings
-"autocmd vimenter * NERDTree " open by default
+" autocmd vimenter * NERDTree " open by default
 "autocmd vimenter * if !argc() | NERDTree | endif " open even if no files are selected
 " autocmd VimEnter * wincmd p     " set focus on opened buffer and not nerdtree
 " quit when nerdtree is the last buffer standing
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 map <Leader>U :UndotreeToggle<cr>
+
+" airline {
+let g:airline#extensions#tagbar#enabled = 0
+"}
 
 
 " -------------------
