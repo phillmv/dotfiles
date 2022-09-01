@@ -27,7 +27,6 @@ packadd! matchit
 
 syntax on
 filetype plugin indent on
-colorscheme reslate
 
 " terminal handling options
 " -------------------------------
@@ -46,7 +45,7 @@ else
 end
 
 set termguicolors " real colours in term
-
+colorscheme reslate
 " rendering & editing
 " -------------------------------
 set encoding=utf-8
@@ -60,14 +59,13 @@ set display+=lastline     " when lines overflow, show me the line, not an @
 set autoindent            " indent at the same level of the previous line
 set backspace=2           " allow backspacing over everything in insert mode
 
-set tabstop=2
-
-" use spaces over tabs {
-set expandtab
-set shiftwidth=2          " when reindenting how far?
-set softtabstop=2
+" everything is spaces! and indents are 2 spaces! {
+set expandtab							" tab key inserts spaces
+set smarttab
+set tabstop=2							" tab width
+set shiftwidth=2          " indent width
+set softtabstop=2					" number of cols for a tab
 " }
-set smarttab              " always use spaces
 
 " file handling:
 " -------------------------------
@@ -501,7 +499,7 @@ nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
 auto BufNewFile,BufRead *.sc set filetype=scheme
 auto BufNewFile,BufRead *.json set ft=javascript
-au FileType make set noexpandtab
+au FileType make setl noexpandtab
 
 
 " add certain tags to html indent
