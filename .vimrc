@@ -178,6 +178,8 @@ endif
 if !empty($CODESPACES)
   " copy over ssh
   vmap <C-c> :OSCYank<CR>
+  " https://github.com/ojroques/vim-oscyank/issues/26
+  let g:oscyank_term = 'default'
 endif
 
 " alt-arrows, alt-bs should skip over words
