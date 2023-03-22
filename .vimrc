@@ -294,6 +294,38 @@ map <Esc>[1;10B <C-w>j
 map <Esc>[1;10A <C-w>k
 map <Esc>[1;10C <C-w>l
 
+" HERE BE DRAGONS "
+" when switching over to neovim, i found that i could not get nvim, for the
+" life of me, to accept option-shift-{left,down,up,right} as valid input.
+" Invariably, (i.e. boot `nvim --clean`, go into insert mode, press <C-V>,
+" press desired key input)  it would register as <S-Left>, swallowing the alt
+" key.
+" I got this to work with normal vim via the terminal escape codes listed
+" above, but no dice with neovim. Even playing around with the Preferences ->
+" Profiles -> Keys -> Left Option Key (Normal, Meta, Esc+) I could not get
+" nvim v0.8.1 to print out something useful for option-shift-$arrow.
+" So I gave up and I did something far dirtier: I added custom keymappings in
+" my iterm2 profile. So now, when I type:
+" - alt-shift-left, it sends `^[left`
+" - alt-shift-down, it sends `^[down`
+" - alt-shift-up, it sends `^[up`
+" - alt-shift-right, it sends `^[right`
+" which neovim for some reason correctly interprets as option-left, etc.
+" this is fucked up? i hate this. but i can't think of a better solution rn.
+map <M-l>eft <C-w>h
+map <M-d>own <C-w>j
+map <M-u>p <C-w>k
+map <M-r>ight <C-w>l
+
+" of course, now that I am sending custom keymappings for alt-option-arrows,
+" the old terminal escape codes don't work. So for normal vim, we now except
+" to see:
+map <Esc>left <C-w>h
+map <Esc>down <C-w>j
+map <Esc>up <C-w>k
+map <Esc>right <C-w>l
+" END DRAGONS "
+
 " with macmeta turned off, alt-, produces ≤
 ""Horizontal split
 map <M-,> :split<CR><C-w>j
