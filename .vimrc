@@ -34,17 +34,16 @@ filetype plugin indent on
 " -------------------------------
 
 set mouse+=a " mouse in terminal
-if !has("gui_macvim") && !has("gui_running")
-  set ttymouse=xterm2 " supposed to help with tmux
+if !has("gui_macvim") && !has("gui_running") && !has('nvim')
+  " https://stackoverflow.com/questions/7000960/in-vim-why-doesnt-my-mouse-work-past-the-220th-column
+  " slash also in tmux:
+  if has("mouse_sgr")
+    set ttymouse=sgr
+  else
+    set ttymouse=xterm2
+  endif
 endif
 
-" https://stackoverflow.com/questions/7000960/in-vim-why-doesnt-my-mouse-work-past-the-220th-column
-" slash also in tmux:
-if has("mouse_sgr")
-    set ttymouse=sgr
-else
-    set ttymouse=xterm2
-end
 
 set termguicolors " real colours in term
 colorscheme reslate
