@@ -17,6 +17,7 @@ Plug 'ojroques/vim-oscyank'
 Plug 'preservim/tagbar'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'github/copilot.vim'
 call plug#end()
 
 call pathogen#infect()
