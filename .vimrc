@@ -172,8 +172,9 @@ if has("clipboard")
   " copy and paste
   vmap <C-c> "+yi
   vmap <C-x> "+c
-  vmap <C-v> c<ESC>"+p
-  imap <C-v> <ESC>"+pa
+  " Note: DEPRECATED for now, cmd-v in mac seems to work just fine.
+  " vmap <C-v> c<ESC>"+p
+  " imap <C-v> <ESC>"+pa
 endif
 
 if !empty($CODESPACES)
