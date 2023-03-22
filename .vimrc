@@ -418,6 +418,11 @@ if has("gui_macvim") && has("gui_running")
     map! <S-Insert> <MiddleMouse>
 endif
 
+" https://www.reddit.com/r/neovim/comments/xncvul/how_to_make_the_separator_line_the_same_color_as/
+if has("nvim")
+  hi WinSeparator guibg=NONE
+endif
+
 " ----------------------------------
 " Misc bindings:
 " ----------------------------------
