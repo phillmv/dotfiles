@@ -15,6 +15,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ojroques/vim-oscyank'
 Plug 'preservim/tagbar'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'nathanaelkane/vim-indent-guides'
 call plug#end()
 
 call pathogen#infect()
@@ -177,7 +179,7 @@ endif
 
 if !empty($CODESPACES)
   " copy over ssh
-  vmap <C-c> :OSCYank<CR>
+  vmap <C-c> :OSCYankVisual<CR>
   " https://github.com/ojroques/vim-oscyank/issues/26
   let g:oscyank_term = 'default'
 endif
