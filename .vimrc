@@ -18,6 +18,7 @@ Plug 'preservim/tagbar'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'github/copilot.vim'
+Plug 'vim-airline/vim-airline'
 call plug#end()
 
 call pathogen#infect()
