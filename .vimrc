@@ -21,6 +21,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'github/copilot.vim'
 call plug#end()
 
+if has("nvim")
+  lua require('lsp')
+endif
+
 "packadd! matchit
 "packadd! rainbow_parentheses
 
