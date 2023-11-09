@@ -18,13 +18,7 @@ endif
 call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'ojroques/vim-oscyank'
-Plug 'preservim/tagbar'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'github/copilot.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
 "packadd! matchit

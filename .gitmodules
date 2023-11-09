@@ -25,3 +25,18 @@
 [submodule ".vim/bundle/vim-javascript"]
 	path = .vim/pack/bundle/start/vim-javascript
 	url = git@github.com:pangloss/vim-javascript.git
+[submodule "vim-oscyank"]
+	path = .vim/pack/bundle/start/vim-oscyank
+	url = git@github.com:ojroques/vim-oscyank.git
+[submodule "tagbar"]
+	path = .vim/pack/bundle/start/tagbar
+	url = git@github.com:preservim/tagbar.git
+[submodule "vim-better-whitespace"]
+	path = .vim/pack/bundle/start/vim-better-whitespace
+	url = git@github.com:ntpeters/vim-better-whitespace.git
+[submodule "vim-airline"]
+	path = .vim/pack/bundle/start/vim-airline
+	url = git@github.com:vim-airline/vim-airline.git
+[submodule "nvim-lspconfig"]
+	path = .vim/pack/bundle/start/nvim-lspconfig
+	url = git@github.com:neovim/nvim-lspconfig.git
