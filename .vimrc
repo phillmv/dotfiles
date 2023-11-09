@@ -10,6 +10,11 @@ set nocompatible
 " -------------------------------
 " packaging
 " -------------------------------
+
+if has("packages")
+  let &packpath = &runtimepath
+endif
+
 call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -22,9 +27,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
-call pathogen#infect()
-
-packadd! matchit
+"packadd! matchit
+"packadd! rainbow_parentheses
 
 " -------------------------------
 "  vim customization
