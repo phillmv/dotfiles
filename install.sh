@@ -4,7 +4,7 @@ exec 2>&1
 set -x
 
 if [ ! -z "$CODESPACES" ]; then
-  ./script/setup-codespaces.sh
+  . ./script/setup-codespaces.sh
 fi
 
-./script/setup.sh
+. ./script/setup.sh
