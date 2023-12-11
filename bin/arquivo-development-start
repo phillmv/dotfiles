@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+ARQUIVO_PORT=12346
+export ARQUIVO_USER=phillmv
+export ARQUIVO_GIT_EMAIL=phillmv@github.com
+export ARQUIVO_GIT_NAME="Phill MV"
+export RAILS_ENV=development
+export RAILS_MASTER_KEY=$(cat ~/code/arquivo/config/master.key)
+export RAILS_BIND=tcp://0.0.0.0:3001
+
+echo "Running arquivo while mounting local filesystem..."
+
+docker run -it -p "$ARQUIVO_PORT":3001 \
+  -e ARQUIVO_USER \
+  -e ARQUIVO_GIT_EMAIL \
+  -e ARQUIVO_GIT_NAME \
+  -e RAILS_ENV \
+  -e RAILS_BIND \
+  -v ~/Documents/docker-arquivo/:/data \
+  -v ~/code/arquivo/:/arquivo \
+  ghcr.io/phillmv/arquivo-development:latest
