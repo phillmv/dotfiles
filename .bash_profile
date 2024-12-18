@@ -8,4 +8,5 @@ alias branch="git branch"
 alias status="git status"
 alias checkout="git checkout"
 alias ls='ls --color'
+alias mux='tmux -CC new -A -s main'
 set -o vi
