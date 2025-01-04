@@ -6,37 +6,37 @@
 	url = https://github.com/leafgarland/typescript-vim.git
 [submodule ".vim/bundle/undotree"]
 	path = .vim/pack/bundle/start/undotree
-	url = git@github.com:mbbill/undotree.git
+	url = https://github.com/mbbill/undotree.git
 [submodule ".vim/bundle/tcomment_vim"]
 	path = .vim/pack/bundle/start/tcomment_vim
-	url = git@github.com:tomtom/tcomment_vim.git
+	url = https://github.com/tomtom/tcomment_vim.git
 [submodule ".vim/bundle/vim-fugitive"]
 	path = .vim/pack/bundle/start/vim-fugitive
-	url = git@github.com:tpope/vim-fugitive.git
+	url = https://github.com/tpope/vim-fugitive.git
 [submodule ".vim/bundle/vim-ruby"]
 	path = .vim/pack/bundle/start/vim-ruby
-	url = git@github.com:vim-ruby/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby
 [submodule ".vim/bundle/rainbow_parentheses.vim"]
 	path = .vim/pack/bundle/start/rainbow_parentheses.vim
-	url = git@github.com:junegunn/rainbow_parentheses.vim.git
+	url = https://github.com/junegunn/rainbow_parentheses.vim.git
 [submodule ".vim/bundle/vim-go"]
 	path = .vim/pack/bundle/start/vim-go
-	url = git@github.com:fatih/vim-go.git
+	url = https://github.com/fatih/vim-go.git
 [submodule ".vim/bundle/vim-javascript"]
 	path = .vim/pack/bundle/start/vim-javascript
-	url = git@github.com:pangloss/vim-javascript.git
+	url = https://github.com/pangloss/vim-javascript.git
 [submodule "vim-oscyank"]
 	path = .vim/pack/bundle/start/vim-oscyank
-	url = git@github.com:ojroques/vim-oscyank.git
+	url = https://github.com/ojroques/vim-oscyank.git
 [submodule "tagbar"]
 	path = .vim/pack/bundle/start/tagbar
-	url = git@github.com:preservim/tagbar.git
+	url = https://github.com/preservim/tagbar.git
 [submodule "vim-better-whitespace"]
 	path = .vim/pack/bundle/start/vim-better-whitespace
-	url = git@github.com:ntpeters/vim-better-whitespace.git
+	url = https://github.com/ntpeters/vim-better-whitespace.git
 [submodule "vim-airline"]
 	path = .vim/pack/bundle/start/vim-airline
-	url = git@github.com:vim-airline/vim-airline.git
+	url = https://github.com/vim-airline/vim-airline.git
 [submodule "nvim-lspconfig"]
 	path = .vim/pack/bundle/start/nvim-lspconfig
-	url = git@github.com:neovim/nvim-lspconfig.git
+	url = https://github.com/neovim/nvim-lspconfig.git
