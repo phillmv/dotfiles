@@ -6,6 +6,7 @@ ln -s  $(pwd)/tmux.conf     $HOME/.tmux.conf
 ln -s  $(pwd)/.vimrc        $HOME/.vimrc
 ln -sn $(pwd)/.vim/         $HOME/.vim
 ln -s  $(pwd)/.bash_profile $HOME/.bash_profile
+ln -sn $(pwd)/prompts       $HOME/.prompts
 
 mkdir -p $HOME/.config
 ln -s $(pwd)/.config/nvim  $HOME/.config

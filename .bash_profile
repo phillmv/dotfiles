@@ -50,7 +50,7 @@ alias n="nvim"
 set -o vi
 
 # https://github.com/github/goproxy/blob/51fd5fa8eaf572f2eced81e946f50dd00ee9cffa/doc/user.md#set-up
-export GOPROXY="${GOPROXY:-'https://goproxy.githubapp.com/mod,https://proxy.golang.org/,direct'}"
+export GOPROXY="${GOPROXY:-https://goproxy.githubapp.com/mod,https://proxy.golang.org/,direct}"
 export GOPRIVATE=
 export GONOPROXY=
 export GONOSUMDB="${GONOSUMDB:-'github.com/github/*'}"
@@ -71,6 +71,11 @@ function gmr() {
 
   # Run the command with the specified (or default) model
   gh models run "$model" "$@"
+}
+
+# gmr but with a default system prompt applied
+function ai() {
+  gmr --file "$HOME/.prompts/default.prompt.yaml" "$@"
 }
 
 if [ -e /opt/homebrew/bin/brew ]; then
