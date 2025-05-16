@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+# translated from https://github.com/david-crespo/dotfiles/blob/9e40aaf6a9ecff0b0934f4ad10a218341e251b30/bin/codeblocks.ts
+require 'optparse'
+require 'fileutils'
+
+LANGS = %w[rb rs ts tsx js json adoc sh html]
+
+def print_file(filename, content, options = {})
+  if options[:xml]
+    puts "<file>"
+    puts "  <name>#{filename}</name>"
+    puts "  <contents>\n#{content}</contents>"
+    puts "</file>"
+    return
+  end
+
+  if options[:details]
+    puts "<details>"
+    puts "  <summary>#{filename}</summary>\n"
+  else
+    puts "\n---\n\n### `#{filename}`\n\n"
+  end
+
+  ext = File.extname(filename)[1..-1] || ""
+
+  if ext == "md" || options[:lang] == "md"
+    puts content
+    puts
+    return
+  end
+
+  calc_lang = options[:lang] || (LANGS.include?(ext) ? ext : "")
+  puts "```#{calc_lang}\n#{content}\n```\n"
+
+  puts "</details>" if options[:details]
+end
+
+def get_stdin
+  return unless !STDIN.tty?
+  stdin = STDIN.read.strip
+  stdin.empty? ? nil : stdin
+end
+
+options = {}
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: cb [options] [files...]"
+  opts.on("-l", "--lang LANG", "Code block lang for stdin") { |v| options[:lang] = v }
+  opts.on("-d", "--details", "Wrap files in <details>") { options[:details] = true }
+  opts.on("-x", "--xml", "Wrap files in XML for Claude") { options[:xml] = true }
+end
+
+parser.parse!(ARGV)
+files = ARGV
+
+stdin = get_stdin
+print_file("[stdin]", stdin, options) if stdin
+
+if files.empty? && !stdin
+  content = `pbpaste`
+  print_file("[clipboard contents]", content, options) unless content.empty?
+end
+
+files.each do |filename|
+  next unless File.file?(filename)
+  content = File.read(filename)
+  print_file(filename, content, options)
+end
