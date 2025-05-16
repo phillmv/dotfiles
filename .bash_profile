@@ -8,6 +8,10 @@ else
 fi
 
 # path chicanery
+if [ -e $HOME/bin ]; then
+  export PATH="$HOME/bin:$PATH"
+fi
+
 if [ -e /opt/homebrew/opt/coreutils/libexec/gnubin ]; then
   export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 fi

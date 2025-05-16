@@ -1,0 +1,3 @@
+#!/bin/bash
+
+caddy reverse-proxy --from arquivo.localhost --to :12346

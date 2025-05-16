@@ -12,6 +12,9 @@ ln -s $(pwd)/.config/nvim  $HOME/.config
 #ln -s $(pwd)/emacs $HOME/.emacs
 #ln -s $(pwd)/screenrc $HOME/.screenrc
 
+mkdir -p $HOME/bin
+ln -s $(pwd)/bin/* $HOME/bin
+
 if command -v gh > /dev/null; then
   gh extension install https://github.com/github/gh-models
 fi
