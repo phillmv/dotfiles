@@ -19,10 +19,20 @@ hi Cursor           guifg=slategrey guibg=khaki
 hi CursorColumn     term=reverse ctermbg=8 guibg=Grey40
 hi CursorLine       term=underline cterm=underline guibg=Grey40
 hi Define           guibg=bg guifg=#ffd700 gui=bold
-hi DiffAdd          term=bold ctermbg=4 guibg=DarkBlue
-hi DiffChange       term=bold ctermbg=5 guibg=DarkMagenta
-hi DiffDelete       term=bold cterm=bold ctermfg=4 ctermbg=6 gui=bold guifg=Blue guibg=DarkCyan
-hi DiffText         term=reverse cterm=bold ctermbg=1 gui=bold guibg=Red
+
+hi DiffAdd          None
+hi DiffAdd          ctermbg=22  guibg=#2a3a2a
+hi DiffChange       None
+hi DiffChange       ctermbg=17  guibg=#2a2a3a
+hi DiffDelete       None
+hi DiffDelete       ctermbg=52  guibg=#3a2a2a
+hi DiffText         None
+hi DiffText         ctermbg=88  guibg=#3a3a2a
+
+" hi DiffAdd          term=bold ctermbg=4 guibg=DarkBlue
+" hi DiffChange       term=bold ctermbg=5 guibg=DarkMagenta
+" hi DiffDelete       term=bold cterm=bold ctermfg=4 ctermbg=6 gui=bold guifg=Blue guibg=DarkCyan
+" hi DiffText         term=reverse cterm=bold ctermbg=1 gui=bold guibg=Red
 hi Directory        term=bold ctermfg=3 guifg=Cyan
 hi ErrorMsg         term=standout cterm=bold ctermfg=7 ctermbg=1 guifg=White guibg=Red
 hi FoldColumn       term=standout ctermfg=4 ctermbg=7 guifg=grey20 guibg=black
