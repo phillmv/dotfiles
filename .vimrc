@@ -19,6 +19,9 @@ call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'github/copilot.vim'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'sindrets/diffview.nvim'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 if has("nvim")
@@ -126,6 +129,9 @@ set tags+=stdlib.tags
 " Backup and swap files
 set backupdir=~/.vim/_backup/    " where to put backup files.
 set directory=~/.vim/_temp/      " where to put swap files.
+
+" i prefer more context
+set diffopt+=context:30
 
 " -------------------------------
 "  Key bindings
