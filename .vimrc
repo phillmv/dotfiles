@@ -524,6 +524,10 @@ nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
 
 " golang {
+  " wrestling with go-vim vs lsp {
+  let g:go_gopls_enabled = 0
+  let g:go_def_mapping_enabled = 0
+  " } end wrestling with go-vim vs lsp
   auto BufNewFile,BufRead *.go set ft=go
   au FileType go nmap <Leader>i <Plug>(go-info)
   au FileType go nmap <Leader>gd <Plug>(go-doc)
