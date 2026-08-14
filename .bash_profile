@@ -70,6 +70,11 @@ function ai() {
   copilot --model "$model" -p "$*"
 }
 
+function logingh() {
+  unset GITHUB_TOKEN
+  gh auth login --hostname github.com --git-protocol https --web
+}
+
 if [ -e /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
