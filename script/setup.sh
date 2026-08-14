@@ -10,6 +10,9 @@ ln -sn $(pwd)/prompts       $HOME/.prompts
 
 mkdir -p $HOME/.config
 ln -s $(pwd)/.config/nvim  $HOME/.config
+
+mkdir -p $HOME/.copilot
+ln -sf $(pwd)/copilot/copilot-instructions.md $HOME/.copilot/copilot-instructions.md
 #ln -s $(pwd)/emacs $HOME/.emacs
 #ln -s $(pwd)/screenrc $HOME/.screenrc
 
