@@ -64,18 +64,10 @@ agig() {
   command ag --ignore 'packages/*/test' --ignore test "$@" .
 }
 
-# Function to alias "llm" to "gh models run" with configurable model
-function gmr() {
-  # Use the value of LLM_MODEL if set, otherwise fall back to a default model
-  local model="${LLM_MODEL:-openai/gpt-4o}"
-
-  # Run the command with the specified (or default) model
-  gh models run "$model" "$@"
-}
-
-# gmr but with a default system prompt applied
 function ai() {
-  gmr --file "$HOME/.prompts/default.prompt.yaml" "$@"
+  local model="${LLM_MODEL:-claude-sonnet-5}"
+
+  copilot --model "$model" -p "$*"
 }
 
 if [ -e /opt/homebrew/bin/brew ]; then

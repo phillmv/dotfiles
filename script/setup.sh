@@ -17,7 +17,7 @@ mkdir -p $HOME/bin
 ln -s $(pwd)/bin/* $HOME/bin
 
 if command -v gh > /dev/null; then
-  gh extension install https://github.com/github/gh-models
+  gh extension install https://github.com/github/gh-stack
 fi
 
 if command -v vim > /dev/null; then
