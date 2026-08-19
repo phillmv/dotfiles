@@ -20,7 +20,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'github/copilot.vim'
 Plug 'nvim-tree/nvim-web-devicons'
-Plug 'sindrets/diffview.nvim'
+Plug 'phillmv/diffreview.nvim'
 Plug 'tpope/vim-fugitive'
 call plug#end()
 
